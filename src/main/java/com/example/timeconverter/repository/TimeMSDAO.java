@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 @Repository
 public class TimeMSDAO {
     private final List<TimeMS> times = new ArrayList<>();
@@ -19,15 +18,23 @@ public class TimeMSDAO {
     }
 
     public TimeMS findByTimezone(String timezone) {
-        return times.stream().filter(element->element.getTimezone().equals(timezone))
-                .findFirst().orElse(null);
+        for (TimeMS element : times) {
+            if (element.getTimezone().equals(timezone)) {
+                return element;
+            }
+        }
+        return null;
     }
 
     public TimeMS updateTime(TimeMS time) {
-        var timeIndex = IntStream.range(0, times.size())
-                .filter(index->times.get(index).getTimezone().equals(time.getTimezone()))
-                .findFirst().orElse(-1);
-        if(timeIndex > -1){
+        int timeIndex = -1;
+        for (int index = 0; index < times.size(); index++) {
+            if (times.get(index).getTimezone().equals(time.getTimezone())) {
+                timeIndex = index;
+                break;
+            }
+        }
+        if (timeIndex != -1) {
             times.set(timeIndex, time);
             return time;
         }
@@ -35,8 +42,8 @@ public class TimeMSDAO {
     }
 
     public void deleteTime(String timezone) {
-        var time = findByTimezone(timezone);
-        if(time != null){
+        TimeMS time = findByTimezone(timezone);
+        if (time != null) {
             times.remove(time);
         }
     }
