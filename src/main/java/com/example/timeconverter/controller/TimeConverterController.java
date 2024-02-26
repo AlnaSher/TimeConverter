@@ -16,7 +16,11 @@ public class TimeConverterController {
     private final TimeConverterService service;
     @GetMapping
     public List<TimeMS> getCurrentTime(){
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "https://worldtimeapi.org/api/ip";
 
+        ResponseEntity<TimeMS> response = restTemplate.getForEntity(url, TimeMS.class);
+        service.saveTime(response.getBody());
         return service.getCurrentTime();
     }
     @PostMapping("save_time")

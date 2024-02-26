@@ -15,11 +15,6 @@ public class TimeConverterServiceImpl implements TimeConverterService {
     private final TimeMSDAO repository;
     @Override
     public List<TimeMS> getCurrentTime() {
-        RestTemplate restTemplate = new RestTemplate();
-        String url = "https://worldtimeapi.org/api/ip";
-
-        ResponseEntity<TimeMS> response = restTemplate.getForEntity(url, TimeMS.class);
-        repository.saveTime(response.getBody());
         return repository.getCurrentTime();
     }
 
