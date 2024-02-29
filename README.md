@@ -7,7 +7,7 @@
 <h1> Sonarcloud </h1>
 
 You can evaluate the quality of the code 
-[here](https://sonarcloud.io/summary/new_code?id=AlnaSher_TimeConverter).
+[here](https://sonarcloud.io/summary/overall?id=AlnaSher_TimeConverter).
   
 <h1> Used technologies: </h1>
 <li>Maven</li>
